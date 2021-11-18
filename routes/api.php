@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('login', function () {
-    return error_response(Unauthorized, 'Unauthorized');
+    return error_response(401, 'Unauthorized');
 })->name('login');
 
 Route::post('register', [AuthController::class, 'register']);

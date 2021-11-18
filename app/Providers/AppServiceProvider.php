@@ -23,9 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!defined('ValidationError')) define('ValidationError', 422);
-        if (!defined('NotFound')) define('NotFound', 404);
-        if (!defined('Success')) define('Success', 200);
-        if (!defined('Unauthorized')) define('Unauthorized', 401);
+
     }
 }

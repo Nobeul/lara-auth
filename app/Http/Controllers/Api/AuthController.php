@@ -19,7 +19,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return error_response(ValidationError, 'Validation error', $validator->errors());
+            return error_response($this->validationError, 'Validation error', $validator->errors());
         }
 
         try {
@@ -49,7 +49,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return error_response(ValidationError, 'Validation error', $validator->errors());
+            return error_response($this->validationError, 'Validation error', $validator->errors());
         }
 
         $credentials = $request->only('email', 'password');
@@ -58,23 +58,24 @@ class AuthController extends Controller
             $data['name'] = Auth::user()->name;
             $data['access_token'] = Auth::user()->createToken('accessToken')->accessToken;
 
-            return success_response(Success, 'You are successfully logged in.', $data);
+            return success_response($this->success, 'You are successfully logged in.', $data);
         } else {
-            return error_response(Unauthorized, 'Unauthorized');
+            return error_response($this->unauthorized, '$this->unauthorized');
         }
     }
 
-    public function logout()
-    {
-        return Auth::user()->token()->revoke();
+    public function logout()    {
+        Auth::user()->token()->revoke();
+
+        return response()->json(['message' => 'Logout successful'], $this->success);
     }
 
     public function show(Request $request)
     {
         $user = User::where(['email' => $request->email])->first();
         if (empty($user)) {
-            return error_response(NotFound, 'User not found');
+            return error_response($this->notFound, 'User not found');
         }
-        return success_response(Success, 'User found successfully', $user);
+        return success_response($this->success, 'User found successfully', $user);
     }
 }

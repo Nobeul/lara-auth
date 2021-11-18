@@ -3,8 +3,9 @@
 namespace Illuminate\Routing;
 
 use BadMethodCallException;
+use App\Http\Controllers\StatusCode as StatusCode;
 
-abstract class Controller
+abstract class Controller extends StatusCode
 {
     /**
      * The middleware registered on the controller.
