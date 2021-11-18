@@ -27,6 +27,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('user/{email}', [AuthController::class, 'show']);
+    Route::get('user/{email}', [AuthController::class, 'showUserByEmail']);
+    Route::get('users', [AuthController::class, 'showAllUsers']);
     Route::post('logout', [AuthController::class, 'logout']);
 });

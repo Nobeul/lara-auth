@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Auth;
 
@@ -70,12 +71,21 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logout successful'], $this->success);
     }
 
-    public function show(Request $request)
+    public function showUserByEmail(Request $request)
     {
         $user = User::where(['email' => $request->email])->first();
         if (empty($user)) {
             return error_response($this->notFound, 'User not found');
         }
         return success_response($this->success, 'User found successfully', $user);
+    }
+
+    public function showAllUsers(Request $request)
+    {
+        $users = User::all();
+        if (empty($users)) {
+            return error_response($this->notFound, 'User not found');
+        }
+        return success_response($this->success, 'User found successfully', UserResource::collection($users));
     }
 }
