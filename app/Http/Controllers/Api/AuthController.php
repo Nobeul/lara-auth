@@ -82,7 +82,7 @@ class AuthController extends Controller
 
     public function showAllUsers(Request $request)
     {
-        $users = User::all();
+        $users = User::orderBy('id', 'DESC')->get();
         if (empty($users)) {
             return error_response($this->notFound, 'User not found');
         }
